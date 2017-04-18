@@ -58,6 +58,8 @@ send_response(uv_stream_t* client)
     uv_write_t* write_req = static_cast<uv_write_t*>(malloc(sizeof(uv_write_t)));
     write_req->data = resp_buf.base;
     uv_write(write_req, client, &resp_buf, 1, on_send_complete);
+
+    uv_close(reinterpret_cast<uv_handle_t*>(client), (uv_close_cb)free);
 }
 
 
